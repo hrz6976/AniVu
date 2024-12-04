@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.net.Uri
 import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -375,8 +376,9 @@ private fun MainContent(onHandleIntent: @Composable () -> Unit) {
                 onPermissionRequest = {
                     permissionGranted = Environment.isExternalStorageManager()
                     if (!permissionGranted) {
-                        permissionRequester.launch(
-                            Intent(ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                        permissionRequester.launchIntent(
+                            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                            Uri.parse("package:$packageName")
                         )
                     }
                 },
